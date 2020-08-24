@@ -362,6 +362,12 @@ while [ $# -ne 0 ]; do
      exit
    fi
    tgtcxx="$2"; shift; shift;;
+  -G)
+   if ! echo "$2" | awk '/^-.*/ || /^$/ { exit 2 }'; then
+     echo "error: option requires an argument: $1"
+     exit
+   fi
+   hstgo="$2"; shift; shift;;
   -s)
    hststatic=1; shift;;
   -S)
