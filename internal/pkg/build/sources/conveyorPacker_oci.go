@@ -236,12 +236,12 @@ func (cp *OCIConveyorPacker) Get(ctx context.Context, b *sytypes.Bundle) (err er
 
 	err = cp.fetch(ctx)
 	if err != nil {
-		return err
+		return fmt.Errorf("oci fetch error: %v", err)
 	}
 
 	cp.imgConfig, err = cp.getConfig(ctx)
 	if err != nil {
-		return err
+		return fmt.Errorf("oci getConfig error: %v", err)
 	}
 
 	return nil
@@ -294,15 +294,19 @@ func (cp *OCIConveyorPacker) fetch(ctx context.Context) error {
 func (cp *OCIConveyorPacker) getConfig(ctx context.Context) (imgspecv1.ImageConfig, error) {
 	img, err := cp.srcRef.NewImage(ctx, cp.sysCtx)
 	if err != nil {
-		return imgspecv1.ImageConfig{}, err
+		return imgspecv1.ImageConfig{}, fmt.Errorf("getConfig NewImage failed: %v", err)
 	}
 	defer img.Close()
 
-	imgSpec, err := img.OCIConfig(ctx)
+	cb, err := img.ConfigBlob(ctx)
 	if err != nil {
 		return imgspecv1.ImageConfig{}, err
 	}
-	return imgSpec.Config, nil
+	configOCI := &imgspecv1.Image{}
+	if err := json.Unmarshal(cb, configOCI); err != nil {
+		return imgspecv1.ImageConfig{}, err
+	}
+	return configOCI.Config, nil
 }
 
 func (cp *OCIConveyorPacker) insertOCIConfig() error {

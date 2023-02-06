@@ -90,6 +90,16 @@ func unpackRootfs(ctx context.Context, b *sytypes.Bundle, tmpfsRef types.ImageRe
 	}
 	var manifest imgspecv1.Manifest
 	json.Unmarshal(manifestData, &manifest)
+	manifest.Config.MediaType = imgspecv1.MediaTypeImageConfig
+
+	for idx, layerDescriptor := range manifest.Layers {
+		switch mediaType := layerDescriptor.MediaType; mediaType {
+		case "application/vnd.docker.image.rootfs.diff.tar.gzip":
+			manifest.Layers[idx].MediaType = "application/vnd.oci.image.layer.v1.tar+gzip"
+		case "application/vnd.docker.image.rootfs.diff.tar":
+			manifest.Layers[idx].MediaType = "application/vnd.oci.image.layer.v1.tar"
+		}
+	}
 
 	// UnpackRootfs from umoci v0.4.2 expects a path to a non-existing directory
 	os.RemoveAll(b.RootfsPath)
