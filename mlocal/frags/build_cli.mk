@@ -49,7 +49,7 @@ $(bash_completions): $(apptainer_build_config)
 	@echo " GEN" $@
 	$(V)rm -f $@
 	$(V)mkdir -p $(@D)
-	$(V)$(GO) run $(GO_MODFLAGS) -tags "$(GO_TAGS)" \
+	$(V)env -u GOARCH CC=$(HOSTCC) $(GO) run $(GO_MODFLAGS) -tags "$(GO_TAGS)" \
 		$(SOURCEDIR)/cmd/bash_completion/bash_completion.go $@
 
 bash_completion1_INSTALL := $(DESTDIR)$(DATADIR)/bash-completion/completions/apptainer

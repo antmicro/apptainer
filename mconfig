@@ -40,6 +40,8 @@ tgtobjcopy=
 hststatic=0
 tgtstatic=0
 
+tgtgoarch=
+
 # user_cflags - user-defined CFLAGS without all the cflags_opts
 user_cflags="$CFLAGS"
 cflags_opts="-Wall -Werror -Wfatal-errors -Wno-unknown-warning-option \
@@ -368,6 +370,12 @@ while [ $# -ne 0 ]; do
      exit
    fi
    hstgo="$2"; shift; shift;;
+  --target-goarch)
+   if ! echo "$2" | awk '/^-.*/ || /^$/ { exit 2 }'; then
+     echo "error: option requires an argument: $1"
+     exit
+   fi
+   tgtgoarch="$2"; shift; shift;;
   -s)
    hststatic=1; shift;;
   -S)
@@ -669,23 +677,28 @@ HOSTOBJCOPY := $hstobjcopy
 
 AR := $tgtar
 CC := $tgtcc
+CC_FOR_linux_$tgtgoarch := $tgtcc
 CXX := $tgtcxx
 LD := $tgtld
 RANLIB := $tgtranlib
 SIZE := size
 OBJCOPY := $tgtobjcopy
+export CC CC_FOR_linux_$tgtgoarch
 
 ARCH := $tgt_arch
 
 CFLAGS := $cflags
 
 GO := $hstgo
+GOARCH := $tgtgoarch
+export GOARCH
 
 CGO_CFLAGS := -I$builddir $CGO_CFLAGS
 CGO_LDFLAGS := $CGO_LDFLAGS
 CGO_CPPFLAGS := $CGO_CPPFLAGS
 CGO_CXXFLAGS := $CGO_CXXFLAGS
-export CGO_CFLAGS CGO_LDFLAGS CGO_CPPFLAGS CGO_CXXFLAGS
+CGO_ENABLED := 1
+export CGO_CFLAGS CGO_LDFLAGS CGO_CPPFLAGS CGO_CXXFLAGS CGO_ENABLED
 EOF
 
 
