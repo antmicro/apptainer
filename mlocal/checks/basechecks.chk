@@ -94,7 +94,7 @@ elif [ "$hstgo" = "" ]; then
 	fi
 else
 	printf " checking: host Go compiler (at least version $hstgo_version)... "
-	if $makeit_scriptsdir/check-min-go-version $go $hstgo_version >/dev/null 2>&1; then
+	if $makeit_scriptsdir/check-min-go-version $hstgo $hstgo_version >/dev/null 2>&1; then
 		hstgo=`command -v $hstgo`
 		echo $hstgo
 	else
