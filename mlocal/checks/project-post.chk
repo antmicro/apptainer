@@ -195,7 +195,7 @@ if ! $tgtcc -x c -o $testprog ${testprog}.c >/dev/null 2>&1; then
 		exit 2;
 	fi
 else
-    if ! $testprog; then
+    if [ "$xcompile" -eq 0 ] && [ ! $testprog ]; then 
         echo "ERROR: Kernel does not support NO_NEW_PRIVS. Updated Kernel is required."
         exit 2;
     else
@@ -266,7 +266,7 @@ EOF
 if ! $tgtcc -x c -o $testprog ${testprog}.c >/dev/null 2>&1; then
     echo "no"
 else
-    if ! $testprog; then
+    if [ "$xcompile" -eq 0 ] && [ ! $testprog ]; then
         echo "no"
     else
         echo "yes"

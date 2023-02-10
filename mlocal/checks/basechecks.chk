@@ -460,6 +460,23 @@ fi
 echo "$short_version"
 
 
+############################
+# check if cross-compiling
+############################
+printf " checking: if cross-compiling... "
+xcompile=0
+if [ "$tgt_arch" != "$hst_arch" ]; then
+    if [ -z "$tgtgoarch" ]; then
+        echo "cross compiler is set but GOARCH is empty!"
+        exit 2
+    fi
+    xcompile=1
+    echo "yes"
+else
+    echo "no"
+fi
+
+
 ########################
 # unprivileged user namespaces
 ########################
