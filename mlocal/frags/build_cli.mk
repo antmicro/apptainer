@@ -76,7 +76,7 @@ config_INSTALL := $(DESTDIR)$(SYSCONFDIR)/apptainer/apptainer.conf
 # override this to empty to avoid merging old configuration settings
 old_config := $(config_INSTALL)
 
-$(config): $(apptainer)
+$(config): | $(apptainer)
 	@echo " GEN $@`if [ -n "$(old_config)" ]; then echo " from $(old_config)"; fi`"
 	$(V)$(apptainer) confgen $(old_config) $(config)
 
