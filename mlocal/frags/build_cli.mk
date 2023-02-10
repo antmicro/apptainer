@@ -103,7 +103,7 @@ man_pages := $(BUILDDIR)$(MANDIR)/man1
 $(man_pages): apptainer
 	@echo " MAN" $@
 	mkdir -p $@
-	$(V)$(GO) run $(GO_MODFLAGS) -tags "$(GO_TAGS)" \
+	$(V)env -u GOARCH CC=$(HOSTCC) $(GO) run $(GO_MODFLAGS) -tags "$(GO_TAGS)" \
 		$(SOURCEDIR)/cmd/docs/docs.go man --dir $@
 	$(V)cd $@;							\
 		for M in apptainer*; do					\
