@@ -34,6 +34,7 @@ func init() {
 		cmdManager.RegisterFlagForCmd(&deleteImageTimeoutFlag, deleteImageCmd)
 		cmdManager.RegisterFlagForCmd(&deleteLibraryURIFlag, deleteImageCmd)
 		cmdManager.RegisterFlagForCmd(&commonNoHTTPSFlag, deleteImageCmd)
+		cmdManager.RegisterFlagForCmd(&commonOldNoHTTPSFlag, deleteImageCmd)
 	})
 }
 

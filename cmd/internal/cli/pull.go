@@ -139,6 +139,7 @@ func init() {
 		cmdManager.RegisterFlagForCmd(&pullLibraryURIFlag, PullCmd)
 		cmdManager.RegisterFlagForCmd(&pullNameFlag, PullCmd)
 		cmdManager.RegisterFlagForCmd(&commonNoHTTPSFlag, PullCmd)
+		cmdManager.RegisterFlagForCmd(&commonOldNoHTTPSFlag, PullCmd)
 		cmdManager.RegisterFlagForCmd(&commonTmpDirFlag, PullCmd)
 		cmdManager.RegisterFlagForCmd(&pullDisableCacheFlag, PullCmd)
 		cmdManager.RegisterFlagForCmd(&pullDirFlag, PullCmd)

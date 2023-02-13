@@ -73,6 +73,7 @@ func init() {
 		cmdManager.RegisterFlagForCmd(&pushAllowUnsignedFlag, PushCmd)
 		cmdManager.RegisterFlagForCmd(&pushDescriptionFlag, PushCmd)
 		cmdManager.RegisterFlagForCmd(&commonNoHTTPSFlag, PushCmd)
+		cmdManager.RegisterFlagForCmd(&commonOldNoHTTPSFlag, PushCmd)
 
 		cmdManager.RegisterFlagForCmd(&dockerUsernameFlag, PushCmd)
 		cmdManager.RegisterFlagForCmd(&dockerPasswordFlag, PushCmd)

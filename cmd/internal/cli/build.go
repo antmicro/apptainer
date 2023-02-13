@@ -303,6 +303,7 @@ func init() {
 		cmdManager.RegisterFlagForCmd(&buildUpdateFlag, buildCmd)
 		cmdManager.RegisterFlagForCmd(&commonForceFlag, buildCmd)
 		cmdManager.RegisterFlagForCmd(&commonNoHTTPSFlag, buildCmd)
+		cmdManager.RegisterFlagForCmd(&commonOldNoHTTPSFlag, buildCmd)
 		cmdManager.RegisterFlagForCmd(&commonTmpDirFlag, buildCmd)
 
 		cmdManager.RegisterFlagForCmd(&dockerUsernameFlag, buildCmd)
