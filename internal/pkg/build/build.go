@@ -211,6 +211,7 @@ func newBuild(defs []types.Definition, conf Config) (*Build, error) {
 			MksquashfsProcs: mksquashfsProcs,
 			MksquashfsMem:   mksquashfsMem,
 			MksquashfsPath:  mksquashfsPath,
+			Arch:            conf.Opts.Arch,
 		}
 	default:
 		return nil, fmt.Errorf("unrecognized output format %s", conf.Format)

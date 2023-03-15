@@ -52,6 +52,17 @@ var buildArgs struct {
 	ignoreFakerootCmd bool // Ignore fakeroot command (hidden)
 	ignoreUserns      bool // Ignore user namespace(hidden)
 	remote            bool // Remote flag(hidden, only for helpful error message)
+	headerArch        string
+}
+
+// --header-arch
+var buildHeaderArchFlag = cmdline.Flag{
+	ID:           "buildHeaderArchFlag",
+	Value:        &buildArgs.headerArch,
+	DefaultValue: "",
+	Name:         "header-arch",
+	Usage:        "Override architecture in SIF header",
+	EnvKeys:      []string{"HEADERARCH"},
 }
 
 // -s|--sandbox
@@ -325,6 +336,7 @@ func init() {
 		cmdManager.RegisterFlagForCmd(&buildIgnoreFakerootCommand, buildCmd)
 		cmdManager.RegisterFlagForCmd(&buildIgnoreUsernsFlag, buildCmd)
 		cmdManager.RegisterFlagForCmd(&buildRemoteFlag, buildCmd)
+		cmdManager.RegisterFlagForCmd(&buildHeaderArchFlag, buildCmd)
 	})
 }
 

@@ -36,6 +36,7 @@ type SIFAssembler struct {
 	MksquashfsProcs uint
 	MksquashfsMem   string
 	MksquashfsPath  string
+	Arch            string
 }
 
 type encryptionOptions struct {
@@ -183,7 +184,13 @@ func (a *SIFAssembler) Assemble(b *types.Bundle, path string) error {
 	if a.MksquashfsProcs != 0 {
 		flags = append(flags, "-processors", fmt.Sprint(a.MksquashfsProcs))
 	}
-	arch := machine.ArchFromContainer(b.RootfsPath)
+
+	var arch string
+	arch = a.Arch
+	if arch == "" {
+		sylog.Infof("Architecture not overriden, try to infer")
+		arch = machine.ArchFromContainer(b.RootfsPath)
+	}
 	if arch == "" {
 		sylog.Infof("Architecture not recognized, use native")
 		arch = runtime.GOARCH
