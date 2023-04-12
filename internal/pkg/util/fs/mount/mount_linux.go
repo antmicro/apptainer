@@ -701,9 +701,9 @@ func (p *Points) AddOverlay(tag AuthorizedTag, dest string, flags uintptr, lower
 		if !strings.HasPrefix(workdir, "/") {
 			return fmt.Errorf("workdir must be an absolute path")
 		}
-		options = fmt.Sprintf("lowerdir=%s,upperdir=%s,workdir=%s", lowerdir, upperdir, workdir)
+		options = fmt.Sprintf("xino=on,lowerdir=%s,upperdir=%s,workdir=%s", lowerdir, upperdir, workdir)
 	} else {
-		options = fmt.Sprintf("lowerdir=%s", lowerdir)
+		options = fmt.Sprintf("xino=on,lowerdir=%s", lowerdir)
 	}
 	return p.add(tag, "overlay", dest, "overlay", flags, options)
 }
