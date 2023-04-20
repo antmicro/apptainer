@@ -167,6 +167,11 @@ func ldCache() (map[string]string, error) {
 	if err != nil {
 		return nil, err
 	}
+	if _, err := os.Stat("/etc/ld.so.cache"); err != nil {
+		if _, err := exec.Command(ldconfig).Output(); err != nil {
+			return nil, fmt.Errorf("could not create ld.so.cache: %v", err)
+		}
+	}
 	out, err := exec.Command(ldconfig, "-p").Output()
 	if err != nil {
 		return nil, fmt.Errorf("could not execute ldconfig: %v", err)
