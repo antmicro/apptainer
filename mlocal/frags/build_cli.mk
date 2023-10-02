@@ -22,7 +22,7 @@ $(apptainer_deps): $(GO_MODFILES)
 apptainer := $(BUILDDIR)/apptainer
 $(apptainer): $(apptainer_build_config) $(apptainer_deps) $(apptainer_SOURCE)
 	@echo " GO" $@; echo "    [+] GO_TAGS" \"$(GO_TAGS)\"
-	$(V)$(GO) build $(GO_MODFLAGS) $(GO_BUILDMODE) -tags "$(GO_TAGS)" $(GO_LDFLAGS) \
+	$(V)$(GO) build -buildvcs=false $(GO_MODFLAGS) $(GO_BUILDMODE) -tags "$(GO_TAGS)" $(GO_LDFLAGS) \
 		-o $(BUILDDIR)/apptainer $(SOURCEDIR)/cmd/apptainer
 
 apptainer_INSTALL := $(DESTDIR)$(BINDIR)/apptainer
